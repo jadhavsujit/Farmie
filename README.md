@@ -114,16 +114,16 @@ FARMER
 
 
 ADMIN
-- Manger User
+- Mange User
 
 
-- Manager Farmer
+- Manage Farmer
 
 
 - Manage Products
 
 
-- Manager Order
+- Manage Order
 
 
 
