@@ -1,0 +1,93 @@
+create table products (
+	id BIGINT,
+	category_id BIGINT,
+	name VARCHAR(50),
+	price DOUBLE,
+	description VARCHAR(200),
+	review_id INT,
+	in_stock BIT(1),
+	img_id VARCHAR(50)
+);
+
+
+create table category (
+	id BIGINT,
+	name VARCHAR(50),
+	description VARCHAR(200)
+);
+
+create table customer (
+	id BIGINT,
+	fname VARCHAR(50),
+	lname VARCHAR(50),
+	email VARCHAR(50),
+	phoneno VARCHAR(50),
+	password VARCHAR(50)
+);
+
+
+create table orders (
+	id BIGINT,
+	order_date DATE,
+	delivery_date DATE,
+	order_status VARCHAR(50),
+	shipping_fee DOUBLE,
+	total_price DOUBLE,
+	customer_id BIGINT
+);
+
+
+create table order_details (
+	id BIGINT,
+	quantity INT,
+	total_price DOUBLE,
+	order_id BIGINT,
+	product_id BIGINT
+);
+
+
+create table carts (
+	id BIGINT,
+	created_on DATE,
+	total_cart_price DOUBLE,
+	total_items INT,
+	updated_on DATE,
+	customer_id BIGINT
+);
+
+create table cart_items (
+	id BIGINT,
+	quantity INT,
+	total_price DOUBLE,
+	cart_id BIGINT,
+	product_id BIGINT
+);
+
+
+create table reviews (
+	product_id BIGINT,
+	description VARCHAR(50),
+	rating decimal(2,1)
+);
+
+create table supplier (
+	id BIGINT,
+	fname VARCHAR(50),
+	lname VARCHAR(50),
+	email VARCHAR(50),
+	phoneno VARCHAR(50),
+	adhar_no BIGINT,
+	password VARCHAR(50)
+);
+
+
+create table address (
+	id BIGINT,
+	customer_id BIGINT,
+	address VARCHAR(200),
+	landmark VARCHAR(200),
+	city VARCHAR(50),
+	state VARCHAR(50),
+	country VARCHAR(50),
+	pincode INT
+);
