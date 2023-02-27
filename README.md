@@ -80,19 +80,13 @@ The direct farmer-to-consumer app aims to address these challenges by providing 
 
 2.3.3 SYSTEM REQUIREMENTS
 2.3.3.1 NON FUNCTIONAL REQUIREMENTS
-i) Efficiency Requirements
-
-ii) Reliability Requirement
-
-
-iii) Usability Requirement
-
-
-iv) Implementation Requirement
-
-
-
-v) Delivery Requirement
+- User-Friendly Interface: The app should have a user-friendly interface that is easy to navigate for both farmers and consumers.
+- Security: The app should ensure that all user data, including personal and payment information, is protected with appropriate security measures.
+- Performance: The app should be able to handle high traffic and large volumes of data without compromising its performance.
+- Compatibility: The app should be compatible with various devices and operating systems.
+- Accessibility: The app should be accessible to people with disabilities, including those who use assistive technologies.
+- Scalability: The app should be designed to scale up as the number of users and transactions increases over time.
+- Reliability: The app should be reliable and available for use 24/7 with minimal downtime for maintenance or upgrades.
 
 
 
@@ -133,4 +127,60 @@ ADMIN
 
 
 
-REFERENCES
+SYSTEM DESIGN
+System design is the solution for the creation of a new system. This phase focuses on the detailed
+implementation of the feasible system. Its emphasis on translating design
+
+Input Design:
+User Registration: The input design for user registration should include fields for users to enter their name, email, phone number, and other necessary information. The design should include validation checks to ensure that data is entered correctly and that users are notified of any errors.
+Product Listings: The input design for product listings should allow farmers to enter product details such as name, description, price, quantity, and other relevant information. The design should include validation checks to ensure that all fields are entered correctly.
+Search Functionality: The input design for search functionality should allow users to enter keywords, categories, or filters to search for specific products. The design should include auto-suggest and autocomplete functionality to improve the user experience.
+Shopping Cart: The input design for the shopping cart should allow users to add or remove products from their cart and to update the quantity of each item. The design should include validation checks to ensure that the user has entered a valid quantity.
+
+Output Design:
+Product Listings: The output design for product listings should display product details such as name, description, price, quantity, and other relevant information. The design should also include product images and reviews to help users make informed purchasing decisions.
+Search Results: The output design for search results should display a list of products that match the user's search criteria. The design should include relevant product details and images, as well as filtering options to further refine the search.
+Shopping Cart: The output design for the shopping cart should display the list of products that the user has added to their cart, along with the price, quantity, and total cost of each item. The design should also include options to update or remove items from the cart.
+Order Confirmation: The output design for the order confirmation should display the details of the user's order, including the total cost, shipping details, and estimated delivery date.
+The input and output design of the direct farmer-to-consumer app should be intuitive and user-friendly, allowing users to easily enter and retrieve information. The design should also include appropriate feedback and validation checks to ensure that the user enters correct data and receives accurate information.
+
+
+DATABASE DESIGN
+3.2 DATABASE
+Databases are the storehouses of data used in the software systems. The data is stored in tables
+inside the database. Several tables are created for the manipulation of the data for the system. Two
+essential settings for a database are
+▪ Primary key - the field that is unique for all the record occurrences
+▪ Foreign key - the field used to set relation between tables
+Normalization is a technique to avoid redundancy in the tables.
+
+3.3 SYSTEM TOOLS
+The various system tools that have been used in developing both the front end and the back end of
+the project are being discussed in this chapter.
+
+3.3.1 FRONT END
+React is a library which is developed by Facebook are utilized to implement the frontend. React
+(also known as React.js or ReactJS) is a free and open-source front-end JavaScript library for
+building user interfaces or UI components. It is maintained by Facebook and a community of
+individual developers and companies. React can be used as a base in the development of single
+page or mobile applications. However, React is only concerned with state management and
+rendering that state to the DOM, so creating React applications usually requires the use of
+additional libraries for routing, as well as certain client-side functionality.
+
+
+3.3.2 BACKEND
+The back end is implemented using MySQL which is used to design databases
+
+MySQL:
+MySQL is the world's second most widely used open-source relational database management
+system (RDBMS). The SQL phrase stands for Structured Query Language. An application
+software called Navicert was used to design the tables in MySQL.
+
+Spring-Boot:
+This is used to connect MYSQL and fetch data from database and store the data in database. The
+Spring Framework is an application framework and inversion of control container for the Java
+platform. The framework's core features can be used by any Java application, but there are
+extensions for building web applications on top of the Java EE (Enterprise Edition) platform.
+Although the framework does not impose any specific programming model, it has become popular
+in the Java community as an addition to the Enterprise JavaBeans (EJB) model. The Spring
+Framework is Open-source Framework.
