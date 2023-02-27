@@ -38,11 +38,6 @@ The scope of this project includes the following:
 The project's scope is focused on the development and implementation of a direct farmer-to-consumer app that connects farmers and consumers. The project's success will be measured by the number of farmers and consumers who use the app, the volume of produce sold through the app, and the level of customer satisfaction. The project's goal is to promote sustainable agriculture, support small-scale farmers, and create a more equitable and transparent food system that benefits both farmers and consumers.
 
 
-
-
-
-
-
 SYSTEM ANALYSIS
 System analysis is the process of gathering and interpreting facts, diagnosing problems, and using
 the information to recommend improvements on the system. System analysis is a problem-solving
@@ -53,3 +48,89 @@ the problem areas. The solutions are given as a proposal. The proposal is review
 and suitable changes are made. This loop ends as soon as the user is satisfied with the proposal.
 
 2.1 EXISTING SYSTEM
+
+
+
+2.2 PROPOSED SYSTEM
+
+
+
+2.3 SYSTEM REQUIREMENT SPECIFICATION
+2.3.1 GENERAL DESCRIPTION
+PRODUCT DESCRIPTION :
+The direct farmer-to-consumer app is a mobile application designed to connect small-scale farmers and consumers directly. The app provides a platform for farmers to showcase their fresh, locally grown produce and set fair prices, while allowing consumers to access healthy and affordable food.
+The app features a user-friendly interface for both farmers and consumers. Farmers can easily create a profile on the app, upload photos and descriptions of their produce, and set their prices. They can also include information about their farming practices and certifications, enabling consumers to make informed decisions about their food purchases.
+Consumers can search for and browse through various categories of fresh produce, view product descriptions and photos, and select their desired items for purchase. They can choose to pay for their purchases online or opt for cash on delivery.
+The app also provides a messaging system that enables farmers and consumers to communicate directly with each other. This fosters transparency and trust between farmers and consumers, creating a more resilient and sustainable food system.
+The direct farmer-to-consumer app is designed to promote sustainable agriculture, reduce food waste, and support small-scale farmers. The app provides valuable information about farmers and their farming practices, enabling consumers to make informed decisions about their food purchases. By facilitating direct communication and transactions between farmers and consumers, the app helps build trust and create a more transparent and equitable food system. Overall, the app is a step towards creating a more sustainable and equitable future for food production and consumption.
+
+PROBLEM STATEMENT :
+The current food system is often characterized by a long and complex supply chain that involves multiple intermediaries between farmers and consumers. This can lead to inefficiencies, food waste, and higher prices for consumers. Moreover, small-scale farmers often face challenges in accessing markets and selling their produce at fair prices.
+The problem is that the current food system is not sustainable, equitable, or transparent. There is a lack of direct communication and transactions between farmers and consumers, which creates a lack of trust and transparency in the food system. Furthermore, consumers often lack information about the sources of their food and the farming practices used to grow it, making it difficult for them to make informed decisions about their food purchases.
+The direct farmer-to-consumer app aims to address these challenges by providing a platform that connects small-scale farmers directly to consumers. By eliminating intermediaries, the app enables farmers to market their produce directly to consumers and set fair prices. The app also provides valuable information about farmers and their farming practices, giving consumers the opportunity to make informed decisions about their food purchases. By facilitating direct transactions and communication, the app helps build trust and create a more transparent and equitable food system.
+
+
+2.3.2 SYSTEM OBJECTIVES
+- To provide a platform for small-scale farmers to market their fresh, locally grown produce directly to consumers without intermediaries, enabling them to set fair prices and earn a fair income.
+- To create a more efficient and sustainable food system by reducing the number of intermediaries in the supply chain, thus reducing food waste and lowering prices for consumers.
+- To promote environmental sustainability by encouraging the consumption of locally grown and in-season produce, reducing the carbon footprint associated with food transport.
+- To provide consumers with valuable information about the sources of their food, including information about the farmers and their farming practices, enabling them to make informed decisions about their food purchases.
+- To foster trust and transparency in the food system by facilitating direct communication and transactions between farmers and consumers.
+
+
+2.3.3 SYSTEM REQUIREMENTS
+2.3.3.1 NON FUNCTIONAL REQUIREMENTS
+i) Efficiency Requirements
+
+ii) Reliability Requirement
+
+
+iii) Usability Requirement
+
+
+iv) Implementation Requirement
+
+
+
+v) Delivery Requirement
+
+
+
+2.3.3.2 FUNCTIONAL REQUIREMENT
+USER
+- User Login
+
+
+
+- Register New
+
+
+- Purchasing an Item
+
+
+FARMER
+- Farmer Login
+
+
+- Register new
+
+
+- Adding an item
+
+
+
+ADMIN
+- Manger User
+
+
+- Manager Farmer
+
+
+- Manage Products
+
+
+- Manager Order
+
+
+
+REFERENCES
