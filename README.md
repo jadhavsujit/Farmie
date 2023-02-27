@@ -184,3 +184,15 @@ extensions for building web applications on top of the Java EE (Enterprise Editi
 Although the framework does not impose any specific programming model, it has become popular
 in the Java community as an addition to the Enterprise JavaBeans (EJB) model. The Spring
 Framework is Open-source Framework.
+
+
+REFERENCES
+[1] "Direct-to-Consumer Apps Help Farmers Reach More Customers" by Modern Farmer: This article provides an overview of the direct-to-consumer app trend and how it's helping farmers connect with consumers. It includes insights from farmers who have used these apps and offers tips for getting started.
+
+[2] "How to Build a Direct-to-Consumer App for Your Farm" by Farm Flavor: This guide provides a step-by-step process for building a direct-to-consumer app for your farm. It includes tips on design, development, and marketing, as well as examples of successful apps.
+
+[3] "Best Direct-to-Consumer Farm Apps in 2021" by Food Tank: This article highlights some of the best direct-to-consumer farm apps available in 2021. It includes a brief overview of each app and its features, as well as user reviews.
+
+[4] "Direct-to-Consumer Sales: A Farmer's Guide to Selling Directly to Consumers" by the USDA: This guide provides an overview of direct-to-consumer sales for farmers, including best practices and legal considerations. It also includes a section on online sales, which may be relevant for the direct farmer-to-consumer app project.
+
+[5] "Building an E-Commerce Website: A Step-by-Step Guide" by Shopify: This comprehensive guide provides a step-by-step process for building an e-commerce website, which may be useful for the app development process. It includes tips on design, development, and marketing, as well as examples of successful e-commerce websites.
