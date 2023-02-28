@@ -1,58 +1,95 @@
-create table products (
-	id BIGINT,
-	category_id BIGINT,
-	name VARCHAR(50),
-	in_stock BIT(1),
-	price DOUBLE,
-	description VARCHAR(200),
-	expiry DATE
-);
-
-
 create table categories (
 	id BIGINT,
 	name VARCHAR(50),
-	description VARCHAR(200)
+	description VARCHAR(200),
+	primay key(id)
 );
+
+create table payment (
+	id BIGINT,
+	payment_method VARCHAR(50) not null,
+	payment_status VARCHAR(50) not null,
+	payment_date DATETIME not null,
+	primay key(id)
+);
+
 
 create table customers (
 	id BIGINT,
-	fname VARCHAR(50),
-	lname VARCHAR(50),
+	fname VARCHAR(50) not null,
+	lname VARCHAR(50) not null,
 	email VARCHAR(50),
 	phoneno VARCHAR(50),
-	password VARCHAR(50)
+	password VARCHAR(50) not null,
+	primay key(id),
+	unique key(email,phoneno),
+);
+
+create table supplier (
+	id BIGINT,
+	fname VARCHAR(50) not null,
+	lname VARCHAR(50) not null,
+	email VARCHAR(50),
+	phoneno VARCHAR(50),
+	adhar_no BIGINT not null,
+	account_no BIGINT not null,
+	password VARCHAR(50) not null,
+	primay key(id),
+	unique key(phoneno,email,adhar_no)
+);
+
+
+
+create table products (
+	id BIGINT,
+	category_id BIGINT,
+	name VARCHAR(50) not null,
+	in_stock BIT(1) not null,
+	price DOUBLE not null,
+	description VARCHAR(200) not null,
+	expiry DATE not null,
+	primay key(id),
+	foreign key(category_id) references categories(id),
 );
 
 
 create table orders (
 	id BIGINT,
-	order_date DATE,
-	delivery_date DATE,
-	order_status VARCHAR(50),
-	shipping_fee DOUBLE,
-	total_price DOUBLE,
+	order_date DATE not null,
+	delivery_date DATE not null,
+	order_status VARCHAR(50) not null,
+	shipping_fee DOUBLE not null,
+	total_price DOUBLE not null,
 	customer_id BIGINT,
 	payment_id BIGINT
+	primay key(id),
+	foreign key(customer_id) references customers(id),
+	foreign key(payment_id) references payment(id)
 );
+
 
 
 create table order_details (
 	id BIGINT,
-	quantity INT,
-	total_price DOUBLE,
+	quantity INT not null,
+	total_price DOUBLE not null,
 	order_id BIGINT,
-	product_id BIGINT
+	product_id BIGINT,
+	primay key(id),
+	foreign key(order_id) references orders(id),
+	foreign key(product_id) references products(id)
 );
 
 
-create table carts (
+create table cart (
 	id BIGINT,
 	created_on DATE,
-	total_cart_price DOUBLE,
+	total_cart_price DOUBLE, 
 	total_items INT,
 	updated_on DATE,
-	customer_id BIGINT
+	customer_id BIGINT,
+	primay key(id),
+	foreign key(customer_id) references customers(id),
 );
 
 create table cart_items (
@@ -60,7 +97,10 @@ create table cart_items (
 	quantity INT,
 	total_price DOUBLE,
 	cart_id BIGINT,
-	product_id BIGINT
+	product_id BIGINT,
+	primay key(id),
+	foreign key(cart_id) references cart(id),
+	foreign key(product_id) references products(id)
 );
 
 
@@ -69,19 +109,10 @@ create table reviews (
 	customer_id BIGINT,
 	product_id BIGINT,
 	description VARCHAR(50),
-	rating decimal(2,1)
-);
-
-create table supplier (
-	id BIGINT,
-	fname VARCHAR(50),
-	lname VARCHAR(50),
-	email VARCHAR(50),
-	phoneno VARCHAR(50),
-	adhar_no BIGINT,
-	address VARCHAR(200),
-	account_no BIGINT,
-	password VARCHAR(50)
+	rating decimal(2,1),
+	primay key(id),
+	foreign key(customer_id) references customers(id),
+	foreign key(product_id) references products(id)
 );
 
 
@@ -89,12 +120,14 @@ create table supplier_product_inventory (
 	id INT,
 	supplier_id BIGINT,
 	product_id BIGINT,
-	product_quantity int
+	product_quantity int,
+	primay key(id),
+	foreign key(supplier_id) references supplier(id),
+	foreign key(product_id) references products(id)
 );
 
 
-
-create table addresses (
+create table customer_address(
 	id BIGINT,
 	customer_id BIGINT,
 	address VARCHAR(200),
@@ -103,18 +136,31 @@ create table addresses (
 	state VARCHAR(50),
 	country VARCHAR(50),
 	pincode INT
+	primay key(id),
+	foreign key(customer_id) references customers(id)
 );
+
+
+create table supplier_address(
+	id BIGINT,
+	supplier_id BIGINT,
+	address VARCHAR(200),
+	landmark VARCHAR(200),
+	city VARCHAR(50),
+	state VARCHAR(50),
+	country VARCHAR(50),
+	pincode INT
+	primay key(id),
+	foreign key(supplier_id) references supplier(id)
+);
+
 
 create table images (
 	id BIGINT,
 	product_id BIGINT,
 	path VARCHAR(50)
+	primay key(id),
+	foreign key(product_id) references products(id)
 );
 
 
-create table payment (
-	id BIGINT,
-	payment_method VARCHAR(50),
-	payment_status VARCHAR(50),
-	payment_date DATETIME
-);
