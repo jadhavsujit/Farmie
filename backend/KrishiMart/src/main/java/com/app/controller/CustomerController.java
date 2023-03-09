@@ -121,5 +121,10 @@ public class CustomerController {
 		
 		return ResponseEntity.ok(allOrder);
 	}
+	@PostMapping("/order/delete")
+	public ResponseEntity<?> cancelOrder(@RequestParam Long orderId)
+	{
+		return ResponseEntity.ok(customerService.cancelOrder(orderId));
+	}
 
 }

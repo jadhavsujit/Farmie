@@ -48,7 +48,7 @@ public class Order extends BaseEntity{
 	@JoinColumn(name = "cust_id")
 	private Customer cust;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
 	

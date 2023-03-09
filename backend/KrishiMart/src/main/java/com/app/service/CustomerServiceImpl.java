@@ -55,16 +55,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CartItemRepo cartItemRepo;
-	
+
 	@Autowired
 	private OrderDetailRepo orderDetailRepo;
-	
+
 	@Autowired
 	private OrderRepo orderRepo;
-	
+
 	@Autowired
 	private PaymentRepo paymentRepo;
-	
 
 	@Override
 	public List<CustomerDto> getAllCustomer() {
@@ -147,8 +146,8 @@ public class CustomerServiceImpl implements CustomerService {
 		List<CartItemDto> allCartItemDto = new ArrayList<CartItemDto>();
 
 		cartItems.forEach(a -> {
-			allCartItemDto.add(
-					new CartItemDto(a.getId(),a.getQuantity(), a.getTotalPrice(), mapper.map(a.getProduct(), ProductDto.class)));
+			allCartItemDto.add(new CartItemDto(a.getId(), a.getQuantity(), a.getTotalPrice(),
+					mapper.map(a.getProduct(), ProductDto.class)));
 		});
 
 		return allCartItemDto;
@@ -158,89 +157,111 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public ApiResponse deleteCartItem(Long cartItemId) {
-		
-		CartItems cartItem=cartItemRepo.getReferenceById(cartItemId);
-		Cart cart=cartItem.getCart();
-		cart.setTotalItems(cart.getTotalItems()-cartItem.getQuantity());
-		cart.setTotalCartPrice(cart.getTotalCartPrice()-cartItem.getTotalPrice());
+
+		CartItems cartItem = cartItemRepo.getReferenceById(cartItemId);
+		Cart cart = cartItem.getCart();
+		cart.setTotalItems(cart.getTotalItems() - cartItem.getQuantity());
+		cart.setTotalCartPrice(cart.getTotalCartPrice() - cartItem.getTotalPrice());
 		cart.removeCartItems(cartItem);
-				
+
 		return new ApiResponse("cart item removed successfully");
 	}
 
 	@Override
 	public ApiResponse updateCartItemQuantity(Long cartItemId, int quantity) {
-		CartItems cartItem=cartItemRepo.getReferenceById(cartItemId);
-		Cart cart=cartItem.getCart();
-		
-		cart.setTotalItems(cart.getTotalItems()-cartItem.getQuantity());
-		cart.setTotalCartPrice(cart.getTotalCartPrice()-cartItem.getTotalPrice());
-		
-		cartItem.setTotalPrice((cartItem.getTotalPrice()/cartItem.getQuantity())*quantity);
+		CartItems cartItem = cartItemRepo.getReferenceById(cartItemId);
+		Cart cart = cartItem.getCart();
+
+		cart.setTotalItems(cart.getTotalItems() - cartItem.getQuantity());
+		cart.setTotalCartPrice(cart.getTotalCartPrice() - cartItem.getTotalPrice());
+
+		cartItem.setTotalPrice((cartItem.getTotalPrice() / cartItem.getQuantity()) * quantity);
 		cartItem.setQuantity(quantity);
-		
-		cart.setTotalItems(cart.getTotalItems()+cartItem.getQuantity());
-		cart.setTotalCartPrice(cart.getTotalCartPrice()+cartItem.getTotalPrice());
-		
-		
+
+		cart.setTotalItems(cart.getTotalItems() + cartItem.getQuantity());
+		cart.setTotalCartPrice(cart.getTotalCartPrice() + cartItem.getTotalPrice());
+
 		return new ApiResponse("cart updated successfully");
 	}
 
 	@Override
 	public ApiResponse placeOrder(Long customerId, Long addressId) {
-		Customer customer=customerRepo.findById(customerId).orElseThrow(()->new ResourceNotFoundException("invallid customer"));;
-		Cart cart=customer.getCart();
-		Order order=new Order(cart.getTotalCartPrice()+40);
+		Customer customer = customerRepo.findById(customerId)
+				.orElseThrow(() -> new ResourceNotFoundException("invallid customer"));
+		;
+		Cart cart = customer.getCart();
+		Order order = new Order(cart.getTotalCartPrice() + 40);
 		order.setCust(customer);
 		order.setDeliveryAddress(customerAddressRepo.findById(addressId).get());
-		Payment payment=new Payment();
-		Payment savedPayment=paymentRepo.save(payment);
+		Payment payment = new Payment();
+		Payment savedPayment = paymentRepo.save(payment);
 		order.setPayment(savedPayment);
-		
-		Order savedOrder= orderRepo.save(order);
-		
-		List<OrderDetails> orderDetails=new ArrayList<>();
-		cart.getCartItems().forEach(a->{
-		OrderDetails od= new OrderDetails(a.getQuantity(), a.getTotalPrice());
-		od.setOrders(savedOrder);
-		od.setProduct(a.getProduct());
-		OrderDetails newOd= orderDetailRepo.save(od);
-		orderDetails.add(newOd);
+
+		Order savedOrder = orderRepo.save(order);
+
+		List<OrderDetails> orderDetails = new ArrayList<>();
+		cart.getCartItems().forEach(a -> {
+			OrderDetails od = new OrderDetails(a.getQuantity(), a.getTotalPrice());
+			od.setOrders(savedOrder);
+			od.setProduct(a.getProduct());
+			OrderDetails newOd = orderDetailRepo.save(od);
+			orderDetails.add(newOd);
 		});
-		
+
 		savedOrder.setOrderDetails(orderDetails);
-		
+
 		customer.getOrder().add(savedOrder);
-		
+
 		return new ApiResponse("ordered successfully");
 	}
 
 	@Override
-	public ApiResponse addPaymentCard(PaymentCard paymentCard,Long customerId) {
-		Customer customer=customerRepo.getReferenceById(customerId);
+	public ApiResponse addPaymentCard(PaymentCard paymentCard, Long customerId) {
+		Customer customer = customerRepo.getReferenceById(customerId);
 		customer.getPaymentCards().add(paymentCard);
-		
+
 		return new ApiResponse("card added succeessfully");
 	}
 
 	@Override
 	public List<PaymentCard> getAllPaymentCard(Long customerId) {
-		Customer customer=customerRepo.findById(customerId).orElseThrow(()->new ResourceNotFoundException("invallid customer"));
+		Customer customer = customerRepo.findById(customerId)
+				.orElseThrow(() -> new ResourceNotFoundException("invallid customer"));
 		Hibernate.initialize(customer.getPaymentCards());
-		//The Hibernate.initialize() method forces the collection
-		//to be loaded eagerly, even if it was loaded lazily before.
+		// The Hibernate.initialize() method forces the collection
+		// to be loaded eagerly, even if it was loaded lazily before.
 		return customer.getPaymentCards();
 	}
 
 	@Override
 	public List<OrderDto> getAllOrders(Long customerId) {
-		Customer customer=customerRepo.findById(customerId).orElseThrow(()->new ResourceNotFoundException("invalid customer id"));
-		
-		List<OrderDto> orders=new ArrayList<OrderDto>();
-		
+		Customer customer = customerRepo.findById(customerId)
+				.orElseThrow(() -> new ResourceNotFoundException("invalid customer id"));
+
+		List<OrderDto> orders = new ArrayList<OrderDto>();
+		customer.getOrder().forEach(a -> {
+			OrderDto orderDto = new OrderDto(a.getId(), a.getOrderDate(), a.getDeliveryDate(), a.getShippingFee(),
+					a.getTotalPrice(), mapper.map(a.getDeliveryAddress(), AddressDto.class));
+			
+			if((a.getDeliveryDate().getTime()-new Date().getTime())>0)
+			{
+				orderDto.setDelivaryStatus("coming soon");
+			}else {
+				orderDto.setDelivaryStatus("delivered");
+			}
+			orders.add(orderDto);
+		});
+
 		return orders;
 	}
 
-	
-	
+	@Override
+	public ApiResponse cancelOrder(Long orderId) {
+		if(orderRepo.existsById(orderId))
+		orderRepo.deleteById(orderId);
+		else
+			return new ApiResponse("invalid order");
+		return new ApiResponse("order canceled successfully");
+	}
+
 }

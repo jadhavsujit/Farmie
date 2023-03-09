@@ -2,6 +2,8 @@ package com.app.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.app.Entity.PaymentCard;
 import com.app.dto.AddressDto;
 import com.app.dto.ApiResponse;
@@ -34,4 +36,6 @@ public interface CustomerService {
 	List<PaymentCard> getAllPaymentCard(Long customerId);
 
 	List<OrderDto> getAllOrders(Long customerId);
+
+	ApiResponse cancelOrder(Long orderId);
 }
