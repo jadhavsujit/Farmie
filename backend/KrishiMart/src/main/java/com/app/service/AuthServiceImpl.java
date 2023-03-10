@@ -61,6 +61,7 @@ public class AuthServiceImpl implements AuthService {
 		System.out.println(customer);
 		Customer cust = custRepo.findByEmailAndPassword(customer.getEmail(), customer.getPassword());
 		System.out.println(cust);
+		
 		if (cust == null) {
 			throw new ResourceNotFoundException("Invalid email or password");
 		}

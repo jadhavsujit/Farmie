@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(value = "id",allowGetters = true)
 public class CustomerDto {
+	
+	
+	private Long id;
  
 	@NotBlank(message = "first name should not be blank")
 	private String firstName;
