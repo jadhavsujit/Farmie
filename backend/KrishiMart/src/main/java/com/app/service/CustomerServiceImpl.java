@@ -211,6 +211,9 @@ public class CustomerServiceImpl implements CustomerService {
 		savedOrder.setOrderDetails(orderDetails);
 
 		customer.getOrder().add(savedOrder);
+		cart.getCartItems().clear();
+		cart.setTotalCartPrice(0);
+		cart.setTotalItems(0);
 
 		return new ApiResponse("ordered successfully");
 	}
@@ -258,7 +261,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public ApiResponse cancelOrder(Long orderId) {
 		if(orderRepo.existsById(orderId))
-		orderRepo.deleteById(orderId);
+		   orderRepo.deleteById(orderId);
 		else
 			return new ApiResponse("invalid order");
 		return new ApiResponse("order canceled successfully");
