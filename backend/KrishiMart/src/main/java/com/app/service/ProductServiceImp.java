@@ -95,4 +95,10 @@ public class ProductServiceImp implements ProductService {
 
 	}
 
+	@Override
+	public ProductDto getProductDetailById(Long productId) {
+		Product product=productRepo.findById(productId).orElseThrow(()->new ResourceNotFoundException("invalid product id"));
+		return mapper.map(product, ProductDto.class);
+	}
+
 }

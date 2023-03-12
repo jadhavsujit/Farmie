@@ -21,8 +21,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties(value = "id",allowGetters = true)
 public class ProductDto {
 
+	private Long id;
 	@NotNull
 	private Long catId;
 	@NotBlank

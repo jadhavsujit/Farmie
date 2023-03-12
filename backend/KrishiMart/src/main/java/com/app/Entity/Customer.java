@@ -76,8 +76,7 @@ public class Customer extends BaseEntity {
 		address.remove(c);
 		c.setCustomer(null);
 	}
-	
-	
+
 	//helper method to add cart
 	//we don't remove cart so we don't add remove method
 	public void addCart(Cart c)

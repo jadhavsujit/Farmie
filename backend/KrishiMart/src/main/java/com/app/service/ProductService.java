@@ -15,4 +15,6 @@ public interface ProductService {
 	ApiResponse addReview(String description,double rating,Long customerId,Long productId);
 
 	List<ReviewDto> getProductReviews(Long productId);
+
+	ProductDto getProductDetailById(Long productId);
 }
