@@ -1,14 +1,21 @@
 package com.app.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.app.Entity.Category;
-import com.app.Entity.Customer;
-import com.app.Entity.CustomerAddress;
 import com.app.Entity.Product;
 import com.app.Entity.Supplier;
 import com.app.Entity.SupplierAddress;
@@ -16,10 +23,8 @@ import com.app.Entity.SupplierProductInventory;
 import com.app.custom_exceptions.ResourceNotFoundException;
 import com.app.dto.AddressDto;
 import com.app.dto.ApiResponse;
-import com.app.dto.CustomerDto;
 import com.app.dto.ProductDto;
 import com.app.dto.SupplierDto;
-
 import com.app.repository.CategoryRepo;
 import com.app.repository.ProductRepo;
 import com.app.repository.SupplierAddressRepo;
@@ -33,6 +38,9 @@ public class SupplierServiceImpl implements SupplierService {
 	@Autowired
 	private SupplierRepo supplierRepo;
 
+	@Value("${content.upload.folder}")
+	private String folderName;
+	
 	@Autowired
 	private CategoryRepo catRepo;
 
@@ -60,8 +68,39 @@ public class SupplierServiceImpl implements SupplierService {
 		return suppliers.stream().map((a) -> mapper.map(a, SupplierDto.class)).collect(Collectors.toList());
 	}
 
+//	@Override
+//	public ApiResponse addProduct(ProductDto productDto, long suplierId, int qty) {
+//
+//		Category category = catRepo.findById(productDto.getCatId())
+//				.orElseThrow(() -> new ResourceNotFoundException("invalid categoryy!!!!!!!"));
+//
+//		Product product = mapper.map(productDto, Product.class);
+//
+//		product.setCategory(category);
+//		product.setImagePath(null);
+//		product.setInStock(true);
+//
+//		Supplier supplier = supplierRepo.findById(suplierId)
+//				.orElseThrow(() -> new ResourceNotFoundException("invalid supplier!!!!!!!!!!"));
+//
+//		SupplierProductInventory spi = new SupplierProductInventory(qty);
+//
+//		Product prodNew = productRepo.save(product);
+//		spi.setProduct(prodNew);
+//		spi.setSupplier(supplier);
+//		SupplierProductInventory spiNew = spiRepo.save(spi);
+//
+//		category.addProduct(prodNew);
+//
+//		if (spiNew == null || prodNew == null) {
+//			return new ApiResponse("add product failed!!!!!!!!!");
+//		}
+//		return new ApiResponse("product added successfully!!!!!");
+//	}
+
+	
 	@Override
-	public ApiResponse addProduct(ProductDto productDto, long suplierId, int qty) {
+	public ApiResponse addProduct(ProductDto productDto, long suplierId, int qty,MultipartFile file) throws IOException {
 
 		Category category = catRepo.findById(productDto.getCatId())
 				.orElseThrow(() -> new ResourceNotFoundException("invalid categoryy!!!!!!!"));
@@ -69,14 +108,22 @@ public class SupplierServiceImpl implements SupplierService {
 		Product product = mapper.map(productDto, Product.class);
 
 		product.setCategory(category);
-		product.setImagePath(null);
+		//product.setImagePath(null);
+		
+		//save image
+		String targetPath = folderName +  File.separator +  file.getOriginalFilename();
+		Files.copy(file.getInputStream(), Paths.get(targetPath), StandardCopyOption.REPLACE_EXISTING);
+		product.setImagePath(targetPath);
+		
+		
+		
 		product.setInStock(true);
 
 		Supplier supplier = supplierRepo.findById(suplierId)
 				.orElseThrow(() -> new ResourceNotFoundException("invalid supplier!!!!!!!!!!"));
 
 		SupplierProductInventory spi = new SupplierProductInventory(qty);
-
+		
 		Product prodNew = productRepo.save(product);
 		spi.setProduct(prodNew);
 		spi.setSupplier(supplier);
@@ -90,6 +137,11 @@ public class SupplierServiceImpl implements SupplierService {
 		return new ApiResponse("product added successfully!!!!!");
 	}
 
+	
+	
+	
+	
+	
 	@Override
 	public List<ProductDto> getAllProductBySupplier(long supplierId) {
 

@@ -1,8 +1,9 @@
 package com.app.service;
 
+import java.io.IOException;
 import java.util.List;
 
-import javax.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.AddressDto;
 import com.app.dto.ApiResponse;
@@ -13,7 +14,9 @@ public interface SupplierService {
 
 	List<SupplierDto> getAllSupplier();
 	
-	ApiResponse addProduct(ProductDto productDto ,long suplierId,int qty);
+	//ApiResponse addProduct(ProductDto productDto ,long suplierId,int qty);
+	
+	ApiResponse addProduct(ProductDto productDto ,long suplierId,int qty,MultipartFile file) throws IOException;
 	
 	List<ProductDto> getAllProductBySupplier(long supplierId);
 	

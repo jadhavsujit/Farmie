@@ -45,81 +45,86 @@ public class SupplierController {
 		return ResponseEntity.ok(supplierService.getAllSupplier());
 	}
 
+//	@PostMapping(value = "/add/product")
+//	public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto, @RequestParam Long supplierId,
+//			@RequestParam int quantity) throws IOException {
+//
+//		System.out.println(productDto);
+//		System.out.println(supplierId);
+//		System.out.println(quantity);
+//		ApiResponse resp = supplierService.addProduct(productDto, supplierId, quantity);
+//
+//		if (resp.getMessage() == "add product failed!!!!!!!!!") {
+//			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+//		}
+//		return ResponseEntity.ok(resp);
+//
+//	}
+
 	@PostMapping(value = "/add/product")
-	public ResponseEntity<?> addProduct(@RequestBody ProductDto productDto, @RequestParam Long supplierId,
-			@RequestParam int quantity) throws IOException {
-
+	public ResponseEntity<?> addProduct(@RequestParam("image") MultipartFile image,
+		    @RequestParam("supplierId") Long supplierId,@RequestParam Long catId,@RequestParam String name,
+		    @RequestParam double price,@RequestParam String description,@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date expiryDate,
+			@RequestParam("quantity") int quantity) throws IOException {
 		
-		
-		ApiResponse resp = supplierService.addProduct(productDto, supplierId, quantity);
-
+	
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		ProductDto productDto = objectMapper.readValue(productJson, ProductDto.class);
+		ProductDto productDto=new ProductDto(catId, name, price, description, expiryDate);
+		System.out.println(productDto);
+		ApiResponse resp = supplierService.addProduct(productDto, supplierId, quantity,image);
+        
 		if (resp.getMessage() == "add product failed!!!!!!!!!") {
 			return new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
 		}
 		return ResponseEntity.ok(resp);
-
 	}
 
-	
-	
 	@GetMapping("/{supplierId}/products")
-	public ResponseEntity<?> getAllProductBySupplier(@PathVariable Long supplierId)
-	{
-		 List<ProductDto> allProd= supplierService.getAllProductBySupplier(supplierId);
-		 if(allProd.size()==0)
-		 {
-			 return new ResponseEntity<>(new ApiResponse("no Products!!!!!!"),HttpStatus.BAD_REQUEST);
-		 }
-		 return new ResponseEntity<>(allProd,HttpStatus.OK);
+	public ResponseEntity<?> getAllProductBySupplier(@PathVariable Long supplierId) {
+		List<ProductDto> allProd = supplierService.getAllProductBySupplier(supplierId);
+		if (allProd.size() == 0) {
+			return new ResponseEntity<>(new ApiResponse("no Products!!!!!!"), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(allProd, HttpStatus.OK);
 	}
-	
+
 //	@GetMapping("/delete/{productId}")
 //	public ResponseEntity<?> deleteProductById(@RequestParam Long productId)
 //	{
 //		return ResponseEntity.ok(productService.deleteProductById(productId));
 //	}
-	
+
 	@PostMapping("/{supplierId}/address")
-	public ResponseEntity<?> addAddress(@RequestBody @Valid AddressDto addressDto,@PathVariable Long supplierId)
-	{
+	public ResponseEntity<?> addAddress(@RequestBody @Valid AddressDto addressDto, @PathVariable Long supplierId) {
 		return ResponseEntity.ok(supplierService.addAddress(addressDto, supplierId));
 	}
-	
-	
+
 	@GetMapping("/{supplierId}/address")
-	public ResponseEntity<?> getAllAddress(@PathVariable Long supplierId)
-	{
-		List<AddressDto> allAddressDto=supplierService.getAllAddress(supplierId);
-		if(allAddressDto.size()==0)
-			return new ResponseEntity<>(new ApiResponse("no address found"),HttpStatus.BAD_REQUEST);
-		
+	public ResponseEntity<?> getAllAddress(@PathVariable Long supplierId) {
+		List<AddressDto> allAddressDto = supplierService.getAllAddress(supplierId);
+		if (allAddressDto.size() == 0)
+			return new ResponseEntity<>(new ApiResponse("no address found"), HttpStatus.BAD_REQUEST);
+
 		return ResponseEntity.ok(allAddressDto);
 	}
-	
-	
-	
-	
-
 
 	// Add REST end point to upload image
-	 	// URL : http://host:port/products/{productId}/image , Method=POST
-	 	@PostMapping(value="/{productId}/image",consumes = "multipart/form-data")
-	 	public ResponseEntity<?> uploadImageToServerSideFolder(@RequestParam MultipartFile imageFile,
-	 			@PathVariable Long productId
-	 			) throws IOException {
-	 		System.out.println("in upload img " + productId + " " + imageFile.getOriginalFilename());
-	 		return new ResponseEntity<>(imageService.uploadImage(productId, imageFile), HttpStatus.CREATED);
-	 	}
+	// URL : http://host:port/products/{productId}/image , Method=POST
+	@PostMapping(value = "/{productId}/image", consumes = "multipart/form-data")
+	public ResponseEntity<?> uploadImageToServerSideFolder(@RequestParam MultipartFile imageFile,
+			@PathVariable Long productId) throws IOException {
+		System.out.println("in upload img " + productId + " " + imageFile.getOriginalFilename());
+		return new ResponseEntity<>(imageService.uploadImage(productId, imageFile), HttpStatus.CREATED);
+	}
 
-	 	// Add REST end point to download/serve image , method=GET
-	 	// URL : http://host:port/products/{productId}/image
-	 	@GetMapping(value = "/{productId}/image", produces = { MediaType.IMAGE_GIF_VALUE, 
-	 			MediaType.IMAGE_JPEG_VALUE,
-	 			MediaType.IMAGE_PNG_VALUE })
-	 	public ResponseEntity<?> serveImageFromServerSideFolder(@PathVariable Long productId) throws IOException {
-	 		System.out.println("in serve img " + productId);
-	 		return new ResponseEntity<>(imageService.serveImage(productId), HttpStatus.OK);
-	 	}
-
+	// Add REST end point to download/serve image , method=GET
+	// URL : http://host:port/products/{productId}/image
+	@GetMapping(value = "/{productId}/image", produces = { MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_JPEG_VALUE,
+			MediaType.IMAGE_PNG_VALUE })
+	public ResponseEntity<?> serveImageFromServerSideFolder(@PathVariable Long productId) throws IOException {
+		System.out.println("in serve img " + productId);
+		return new ResponseEntity<>(imageService.serveImage(productId), HttpStatus.OK);
+	}
 
 }

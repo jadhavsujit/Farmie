@@ -1,0 +1,15 @@
+.half-width {
+  width: 75%; /* set width to 50% of the container */
+  height: 1%;
+  margin: 0 auto; /* center the image horizontally */
+}
+
+img {
+  height: 100px;
+}
+
+.bordered {
+  border: 2px solid black; /* add a black border */
+  box-sizing: border-box; /* include the border in the image's dimensions */
+}
+  

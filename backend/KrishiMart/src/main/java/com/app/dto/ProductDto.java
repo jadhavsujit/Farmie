@@ -37,6 +37,18 @@ public class ProductDto {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiryDate;
+
+	public ProductDto(@NotNull Long catId, @NotBlank String name, @NotNull double price, String description,
+			Date expiryDate) {
+		super();
+		this.catId = catId;
+		this.name = name;
+		this.price = price;
+		this.description = description;
+		this.expiryDate = expiryDate;
+	}
+	
+	
 	
 
 

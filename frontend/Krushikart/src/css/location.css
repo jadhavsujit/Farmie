@@ -1,0 +1,16 @@
+.location{
+    background-image:url('../images/hero.jpg') ;
+    background-size: cover;
+    text-align: center;
+    padding-bottom: 2.5cm;
+}
+
+#title{
+    color: aliceblue;
+    margin-top: 1cm;
+    padding-top: 2.5cm;
+}
+
+#para1{
+    color: aliceblue;
+}
